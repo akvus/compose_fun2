@@ -13,37 +13,36 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.composefun2.ui.theme.ComposeFun2Theme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExamplesList(viewMode: ExampleListViewModel = viewModel()) {
+fun ExamplesList(navController: NavController, viewMode: ExampleListViewModel = viewModel()) {
     val uiState = viewMode.uiState
 
-    ComposeFun2Theme {
-        Scaffold(
-            topBar = {
-                SmallTopAppBar(
-                    title = { Text("Fun with Jetpack Compose") },
-                    colors = TopAppBarDefaults.smallTopAppBarColors(
-                        containerColor = Color.LightGray
-                    )
+    Scaffold(
+        topBar = {
+            SmallTopAppBar(
+                title = { Text("Fun with Jetpack Compose") },
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = Color.LightGray
                 )
-            }
-        ) { paddingValues ->
-            Surface(
-                modifier = Modifier.fillMaxSize().padding(paddingValues),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                Body(uiState.value.examples)
-            }
+            )
+        }
+    ) { paddingValues ->
+        Surface(
+            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            Body(navController, uiState.value.examples)
         }
     }
 }
 
 @Composable
-fun Body(examples: List<String>) {
+fun Body(navController: NavController, examples: List<String>) {
     LazyColumn(contentPadding = PaddingValues(horizontal = 15.dp)) {
         itemsIndexed(
             examples,
@@ -51,7 +50,7 @@ fun Body(examples: List<String>) {
                 Button(
                     colors = ButtonDefaults.textButtonColors(),
                     onClick = {
-                        // TODO
+                        navController.navigate("example1")
                     },
                     modifier = Modifier.padding(6.dp)
                 ) {
@@ -66,6 +65,5 @@ fun Body(examples: List<String>) {
 @Composable
 fun DefaultPreview() {
     ComposeFun2Theme {
-        Body(listOf("Example 1", "Example 2"))
     }
 }
