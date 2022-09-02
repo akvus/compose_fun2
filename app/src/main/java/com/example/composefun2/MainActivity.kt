@@ -16,6 +16,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
+
             ComposeFun2Theme {
                 CompositionLocalProvider(LocalNavController provides navController) {
                     NavHost(navController = navController, startDestination = "example_list") {
