@@ -7,11 +7,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavController
+import com.example.composefun2.LocalNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Example1(navController: NavController) {
+fun Example1() {
     Scaffold(
         topBar = {
             SmallTopAppBar(
@@ -21,6 +21,7 @@ fun Example1(navController: NavController) {
                     containerColor = Color.LightGray
                 ),
                 navigationIcon = {
+                    val navController = LocalNavController.current
                     IconButton(onClick = {
                         navController.popBackStack()
                     }) {

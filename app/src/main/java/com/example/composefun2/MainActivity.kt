@@ -3,6 +3,7 @@ package com.example.composefun2
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -16,9 +17,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             ComposeFun2Theme {
-                NavHost(navController = navController, startDestination = "example_list") {
-                    composable("example_list") { ExamplesList(navController) }
-                    composable("example1") { Example1(navController) }
+                CompositionLocalProvider(LocalNavController provides navController) {
+                    NavHost(navController = navController, startDestination = "example_list") {
+                        composable("example_list") { ExamplesList() }
+                        composable("example1") { Example1() }
+                    }
                 }
             }
         }

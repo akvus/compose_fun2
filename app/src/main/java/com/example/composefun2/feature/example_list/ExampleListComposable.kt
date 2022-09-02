@@ -13,13 +13,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import com.example.composefun2.LocalNavController
 import com.example.composefun2.ui.theme.ComposeFun2Theme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExamplesList(navController: NavController, viewMode: ExampleListViewModel = viewModel()) {
+fun ExamplesList(viewMode: ExampleListViewModel = viewModel()) {
     val uiState = viewMode.uiState
 
     Scaffold(
@@ -36,17 +36,19 @@ fun ExamplesList(navController: NavController, viewMode: ExampleListViewModel = 
             modifier = Modifier.fillMaxSize().padding(paddingValues),
             color = MaterialTheme.colorScheme.background
         ) {
-            Body(navController, uiState.value.examples)
+            Body(uiState.value.examples)
         }
     }
 }
 
 @Composable
-fun Body(navController: NavController, examples: List<String>) {
+fun Body(examples: List<String>) {
+    val navController = LocalNavController.current
+
     LazyColumn(contentPadding = PaddingValues(horizontal = 15.dp)) {
         itemsIndexed(
             examples,
-            itemContent = { i, item ->
+            itemContent = { _, item ->
                 Button(
                     colors = ButtonDefaults.textButtonColors(),
                     onClick = {
