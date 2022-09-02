@@ -1,4 +1,4 @@
-package com.example.composefun2.feature.example_list
+package com.example.composefun2.feature.list_of_examples
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,7 +19,7 @@ import com.example.composefun2.ui.theme.ComposeFun2Theme
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExamplesList(viewMode: ExampleListViewModel = viewModel()) {
+fun ListOfExamplesPage(viewMode: ListOfExamplesViewModel = viewModel()) {
     val uiState = viewMode.uiState
 
     Scaffold(

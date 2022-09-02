@@ -1,4 +1,4 @@
-package com.example.composefun2.feature.example1
+package com.example.composefun2.feature.complex_grid_example
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -6,20 +6,18 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.example.composefun2.LocalNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Example1() {
+fun ComplexGridExamplePage() {
     Scaffold(
         topBar = {
-            SmallTopAppBar(
-                title = { Text("Example 1") },
-
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = Color.LightGray
-                ),
+            MediumTopAppBar(
+                title = { Text("Discover", fontWeight = FontWeight.Bold) },
+                colors = TopAppBarDefaults.smallTopAppBarColors(),
                 navigationIcon = {
                     val navController = LocalNavController.current
                     IconButton(onClick = {
@@ -33,9 +31,9 @@ fun Example1() {
                 }
             )
         }
-    ) {
-        Surface(modifier = Modifier.padding(it)) {
-            Text("Text")
+    ) { paddingValues ->
+        Surface(modifier = Modifier.padding(paddingValues)) {
+            Text("Text", Modifier.padding(horizontal = 16.dp))
         }
     }
 }

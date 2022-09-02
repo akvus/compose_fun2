@@ -1,15 +1,15 @@
-package com.example.composefun2.feature.example_list
+package com.example.composefun2.feature.list_of_examples
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
-data class ExampleListState(val examples: List<String>)
+data class ListOfExamplesState(val examples: List<String>)
 
-class ExampleListViewModel : ViewModel() {
+class ListOfExamplesViewModel : ViewModel() {
     val uiState = mutableStateOf(
-        ExampleListState(
+        ListOfExamplesState(
             examples = listOf(
-                "Example 1",
+                "Complex grid example",
                 "Example 2",
                 "Example 3"
             )
