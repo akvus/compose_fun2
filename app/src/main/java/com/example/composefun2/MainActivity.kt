@@ -3,6 +3,7 @@ package com.example.composefun2
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -40,9 +41,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Body() {
     Surface(
-        modifier = Modifier.fillMaxSize().padding(
-            16.dp
-        ),
+        modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
         ListOfExamples()
@@ -51,11 +50,20 @@ fun Body() {
 
 @Composable
 fun ListOfExamples() {
-    LazyColumn {
+    LazyColumn(contentPadding = PaddingValues(horizontal = 16.dp)) {
         items(
             count = 100,
             itemContent = {
-                Text("Example")
+                Button(
+                    colors = ButtonDefaults.textButtonColors(),
+                    onClick = {
+                        // TODO
+                    },
+
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Text("Example")
+                }
             }
         )
     }
@@ -65,5 +73,6 @@ fun ListOfExamples() {
 @Composable
 fun DefaultPreview() {
     ComposeFun2Theme {
+        Body()
     }
 }
