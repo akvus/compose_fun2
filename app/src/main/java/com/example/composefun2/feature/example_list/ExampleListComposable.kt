@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,34 +31,34 @@ fun ExamplesList(viewMode: ExampleListViewModel = viewModel()) {
                     )
                 )
             }
-        ) {
-            Body(uiState.value.examples)
+        ) { paddingValues ->
+            Surface(
+                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                Body(uiState.value.examples)
+            }
         }
     }
 }
 
 @Composable
 fun Body(examples: List<String>) {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        LazyColumn(contentPadding = PaddingValues(horizontal = 15.dp)) {
-            items(
-                count = examples.size,
-                itemContent = {
-                    Button(
-                        colors = ButtonDefaults.textButtonColors(),
-                        onClick = {
-                            // TODO
-                        },
-                        modifier = Modifier.padding(7.dp)
-                    ) {
-                        Text(" Examle")
-                    }
+    LazyColumn(contentPadding = PaddingValues(horizontal = 15.dp)) {
+        itemsIndexed(
+            examples,
+            itemContent = { i, item ->
+                Button(
+                    colors = ButtonDefaults.textButtonColors(),
+                    onClick = {
+                        // TODO
+                    },
+                    modifier = Modifier.padding(6.dp)
+                ) {
+                    Text(item)
                 }
-            )
-        }
+            }
+        )
     }
 }
 

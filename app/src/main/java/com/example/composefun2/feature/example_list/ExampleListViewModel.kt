@@ -10,7 +10,8 @@ class ExampleListViewModel : ViewModel() {
         ExampleListState(
             examples = listOf(
                 "Example 1",
-                "Example 2"
+                "Example 2",
+                "Example 3"
             )
         )
     )
