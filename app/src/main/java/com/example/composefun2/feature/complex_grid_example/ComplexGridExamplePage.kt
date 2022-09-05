@@ -1,4 +1,6 @@
 package com.example.composefun2.feature.complex_grid_example
+// Layout from:
+// https://dribbble.com/shots/15348694-Photo-Editing-App-Exploration/attachments/7108950?mode=media
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -11,16 +13,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material.icons.outlined.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -32,6 +37,15 @@ import com.example.composefun2.shared.composable.LazyStaggeredGrid
 @Composable
 fun ComplexGridExamplePage() {
     Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { /*do something*/ },
+                containerColor = Color(0xFF36382E),
+                contentColor = Color(0xFFEDE6E3)
+            ) {
+                Icon(imageVector = Icons.Filled.Phone, contentDescription = "Phone")
+            }
+        },
         topBar = {
             MediumTopAppBar(
                 title = { Text("Discover", fontWeight = FontWeight.Bold) },
@@ -51,14 +65,44 @@ fun ComplexGridExamplePage() {
         }
     ) { paddingValues ->
         Surface(modifier = Modifier.padding(paddingValues)) {
-            Column {
+            Column(
+                Modifier
+                    .width(LocalConfiguration.current.screenWidthDp.dp)
+                    .fillMaxWidth()
+            ) {
                 Text("Text", Modifier.padding(horizontal = 16.dp))
                 Spacer(modifier = Modifier.height(16.dp))
                 BirdsSpinner()
                 Spacer(modifier = Modifier.height(16.dp))
                 ElementsFilters()
                 Spacer(modifier = Modifier.height(16.dp))
-                StaggeredGridBirds()
+                StaggeredBirds()
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
+    }
+}
+
+@Composable
+fun StaggeredBirds() {
+    val image: Painter = painterResource(id = R.drawable.birds2)
+
+    LazyStaggeredGrid(
+        columnCount = 2
+    ) {
+        for (i in 0 until 10000) {
+            item {
+                BirdCard(
+                    image,
+                    modifier = Modifier
+                        .height((200 + 50 * (i % 3 + 1)).dp)
+                        .padding(4.dp)
+                        .fillMaxSize()
+                        .background(
+                            MaterialTheme.colorScheme.background,
+                            RoundedCornerShape(15.dp)
+                        )
+                )
             }
         }
     }
@@ -96,7 +140,7 @@ fun BirdCard(image: Painter, modifier: Modifier) {
                 contentDescription = "Birds"
             )
             Icon(
-                Icons.Outlined.Star,
+                Icons.Outlined.Send,
                 contentDescription = "Star",
                 tint = Color.White,
                 modifier = Modifier
@@ -154,32 +198,6 @@ fun ElementsFilter(filter: Filter) {
                 )
                 Spacer(modifier = Modifier.padding(horizontal = 4.dp))
                 Text(filter.text, modifier = Modifier.align(Alignment.CenterVertically))
-            }
-        }
-    }
-}
-
-@Composable
-fun StaggeredGridBirds() {
-    val image: Painter = painterResource(id = R.drawable.birds)
-
-    Box(modifier = Modifier.padding(horizontal = 8.dp)) {
-        LazyStaggeredGrid(
-            columnCount = 2
-        ) {
-            for (i in 0 until 10000) {
-                item {
-                    BirdCard(
-                        image,
-                        modifier = Modifier
-                            .height((100 * (i % 3 + 1)).dp)
-                            .padding(4.dp)
-                            .background(
-                                MaterialTheme.colorScheme.background,
-                                RoundedCornerShape(15.dp)
-                            )
-                    )
-                }
             }
         }
     }
