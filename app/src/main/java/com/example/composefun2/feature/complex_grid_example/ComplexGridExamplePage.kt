@@ -1,12 +1,12 @@
 package com.example.composefun2.feature.complex_grid_example
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -17,7 +17,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -96,7 +95,9 @@ fun BirdCard(image: Painter) {
                 Icons.Outlined.Star,
                 contentDescription = "Star",
                 tint = Color.White,
-                modifier = Modifier.padding(8.dp).align(Alignment.BottomEnd)
+                modifier = Modifier
+                    .padding(8.dp)
+                    .align(Alignment.BottomEnd)
             )
         }
     }
@@ -104,35 +105,52 @@ fun BirdCard(image: Painter) {
 
 @Composable
 fun ElementsFilters() {
-    Row {
-        ElementsFilter("Some filter", Icons.Filled.Refresh, Color.Green)
-        ElementsFilter("Other filter", Icons.Filled.Delete, Color.Red)
-        ElementsFilter("Some filter", Icons.Filled.Refresh, Color.Green)
-        ElementsFilter("Some filter", Icons.Filled.Refresh, Color.Green)
-        ElementsFilter("Other filter", Icons.Filled.Delete, Color.Red)
-        ElementsFilter("Other filter", Icons.Filled.Delete, Color.Red)
+    val filters = listOf(
+        Filter("Some filter", Icons.Filled.Refresh, Color(0xFFF06449)),
+        Filter("Other filter that is too long", Icons.Filled.Delete, Color(0xFF5BC3EB), true),
+        Filter("Some filter", Icons.Filled.Refresh, Color(0xFFF06449)),
+        Filter("Some filter", Icons.Filled.Refresh, Color(0xFFF06449)),
+        Filter("Other filter", Icons.Filled.Delete, Color(0xFF5BC3EB)),
+        Filter("Other filter", Icons.Filled.Delete, Color(0xFF5BC3EB))
+    )
+
+    LazyRow {
+        itemsIndexed(filters) { _, filter ->
+            ElementsFilter(filter)
+        }
     }
 }
 
+data class Filter(
+    val text: String,
+    val icon: ImageVector,
+    val color: Color,
+    val active: Boolean = false
+)
+
 @Composable
-fun ElementsFilter(text: String, icon: ImageVector, color: Color) {
+fun ElementsFilter(filter: Filter) {
     Card(
         modifier = Modifier
             .height(50.dp)
             .padding(start = 16.dp)
-            .background(
-                MaterialTheme.colorScheme.background,
-                RoundedCornerShape(15.dp)
-            )
+            .border(BorderStroke(1.dp, Color(0xFFAAAAAA)), shape = RoundedCornerShape(15.dp))
+            .background(color = Color.White),
+        colors = CardDefaults.cardColors(containerColor = if (filter.active) Color(0xFFEEEEEE) else Color.White)
     ) {
-        Row {
-            Icon(
-                icon,
-                contentDescription = "Icon",
-                tint = color,
-                modifier = Modifier.padding(8.dp)
-            )
-            Text(text)
+        Box(modifier = Modifier.padding(horizontal = 16.dp), contentAlignment = Alignment.Center) {
+            Row(modifier = Modifier.fillMaxHeight()) {
+                Icon(
+                    filter.icon,
+                    contentDescription = "Icon",
+                    tint = filter.color,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+
+                )
+                Spacer(modifier = Modifier.padding(horizontal = 4.dp))
+                Text(filter.text, modifier = Modifier.align(Alignment.CenterVertically))
+            }
         }
     }
 }
