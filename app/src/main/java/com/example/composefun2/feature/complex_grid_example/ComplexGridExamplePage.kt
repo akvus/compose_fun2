@@ -18,10 +18,11 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.outlined.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -32,14 +33,35 @@ import androidx.compose.ui.unit.dp
 import com.example.composefun2.LocalNavController
 import com.example.composefun2.R
 import com.example.composefun2.shared.composable.LazyStaggeredGrid
+import kotlinx.coroutines.launch
+
+/*
+* TODO
+*  - clean the code
+*  - bottom navigation
+*  - circular FAB
+*  - Nested LazyColumns
+*  - Paddings
+*  - Theming?
+*/
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ComplexGridExamplePage() {
+    val snackBarHostState = remember {
+        SnackbarHostState()
+    }
+    val scope = rememberCoroutineScope()
+
     Scaffold(
+        snackbarHost = { SnackbarHost(snackBarHostState)},
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /*do something*/ },
+                onClick = {
+                         scope.launch {
+                             snackBarHostState.showSnackbar("Some snackbar")
+                         }
+                },
                 containerColor = Color(0xFF36382E),
                 contentColor = Color(0xFFEDE6E3)
             ) {

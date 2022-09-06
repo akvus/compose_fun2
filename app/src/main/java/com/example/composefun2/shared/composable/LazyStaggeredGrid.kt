@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -76,7 +75,6 @@ fun LazyStaggeredGrid(
 class LazyStaggeredGridScope(
     private val columnCount: Int
 ) {
-
     var currentIndex = 0
     val items: Array<MutableList<Pair<Any?, @Composable () -> Unit>>> =
         Array(columnCount) { mutableListOf() }
