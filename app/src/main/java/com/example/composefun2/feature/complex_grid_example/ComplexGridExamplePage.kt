@@ -44,6 +44,7 @@ import kotlinx.coroutines.launch
 *  - Nested LazyColumns
 *  - Paddings
 *  - Theming?
+*  - make fake error and use LaunchedEffect to show one time error message with snack bar
 */
 
 @OptIn(ExperimentalMaterial3Api::class)
