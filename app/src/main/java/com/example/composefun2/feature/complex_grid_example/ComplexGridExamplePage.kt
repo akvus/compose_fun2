@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.example.composefun2.LocalNavController
 import com.example.composefun2.R
 import com.example.composefun2.shared.composable.LazyStaggeredGrid
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 /*
@@ -54,59 +55,78 @@ fun ComplexGridExamplePage() {
     val scope = rememberCoroutineScope()
 
     Scaffold(
-        snackbarHost = { SnackbarHost(snackBarHostState)},
+        snackbarHost = { SnackbarHost(snackBarHostState) },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                         scope.launch {
-                             snackBarHostState.showSnackbar("Some snackbar")
-                         }
-                },
-                containerColor = Color(0xFF36382E),
-                contentColor = Color(0xFFEDE6E3)
-            ) {
-                Icon(imageVector = Icons.Filled.Phone, contentDescription = "Phone")
-            }
+            FAB(scope, snackBarHostState)
         },
         topBar = {
-            MediumTopAppBar(
-                title = { Text("Discover", fontWeight = FontWeight.Bold) },
-                colors = TopAppBarDefaults.smallTopAppBarColors(),
-                navigationIcon = {
-                    val navController = LocalNavController.current
-                    IconButton(onClick = {
-                        navController.popBackStack()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Go back"
-                        )
-                    }
-                }
-            )
+            AppBar()
         }
     ) { paddingValues ->
-        Surface(modifier = Modifier.padding(paddingValues)) {
-            Column(
-                Modifier
-                    .width(LocalConfiguration.current.screenWidthDp.dp)
-                    .fillMaxWidth()
-            ) {
-                Text("Text", Modifier.padding(horizontal = 16.dp))
-                Spacer(modifier = Modifier.height(16.dp))
-                BirdsSpinner()
-                Spacer(modifier = Modifier.height(16.dp))
-                ElementsFilters()
-                Spacer(modifier = Modifier.height(16.dp))
-                StaggeredBirds()
-                Spacer(modifier = Modifier.height(16.dp))
-            }
+        ComplexGridExampleBody(paddingValues)
+    }
+}
+
+@Composable
+private fun ComplexGridExampleBody(paddingValues: PaddingValues) {
+    Surface(modifier = Modifier.padding(paddingValues)) {
+        Column(
+            Modifier
+                .width(LocalConfiguration.current.screenWidthDp.dp)
+                .fillMaxWidth()
+        ) {
+            Text("Text", Modifier.padding(horizontal = 16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
+            BirdsSpinner()
+            Spacer(modifier = Modifier.height(16.dp))
+            ElementsFilters()
+            Spacer(modifier = Modifier.height(16.dp))
+            StaggeredBirds()
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
 
 @Composable
-fun StaggeredBirds() {
+private fun FAB(
+    scope: CoroutineScope,
+    snackBarHostState: SnackbarHostState
+) {
+    FloatingActionButton(
+        onClick = {
+            scope.launch {
+                snackBarHostState.showSnackbar("Some snackbar")
+            }
+        },
+        containerColor = Color(0xFF36382E),
+        contentColor = Color(0xFFEDE6E3)
+    ) {
+        Icon(imageVector = Icons.Filled.Phone, contentDescription = "Phone")
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AppBar() {
+    MediumTopAppBar(
+        title = { Text("Discover", fontWeight = FontWeight.Bold) },
+        colors = TopAppBarDefaults.smallTopAppBarColors(),
+        navigationIcon = {
+            val navController = LocalNavController.current
+            IconButton(onClick = {
+                navController.popBackStack()
+            }) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Go back"
+                )
+            }
+        }
+    )
+}
+
+@Composable
+private fun StaggeredBirds() {
     val image: Painter = painterResource(id = R.drawable.birds2)
 
     LazyStaggeredGrid(
@@ -131,7 +151,7 @@ fun StaggeredBirds() {
 }
 
 @Composable
-fun BirdsSpinner() {
+private fun BirdsSpinner() {
     val image: Painter = painterResource(id = R.drawable.birds)
 
     LazyRow {
@@ -151,7 +171,7 @@ fun BirdsSpinner() {
 }
 
 @Composable
-fun BirdCard(image: Painter, modifier: Modifier) {
+private fun BirdCard(image: Painter, modifier: Modifier) {
     Card(
         modifier = modifier
     ) {
@@ -174,7 +194,7 @@ fun BirdCard(image: Painter, modifier: Modifier) {
 }
 
 @Composable
-fun ElementsFilters() {
+private fun ElementsFilters() {
     val filters = listOf(
         Filter("Some filter", Icons.Filled.Refresh, Color(0xFFF06449)),
         Filter("Other filter that is too long", Icons.Filled.Delete, Color(0xFF5BC3EB), true),
@@ -199,7 +219,7 @@ data class Filter(
 )
 
 @Composable
-fun ElementsFilter(filter: Filter) {
+private fun ElementsFilter(filter: Filter) {
     Card(
         modifier = Modifier
             .height(50.dp)
