@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.outlined.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -44,26 +45,35 @@ import kotlinx.coroutines.launch
 *  - Nested LazyColumns
 *  - Paddings
 *  - Theming?
-*  - make fake error and use LaunchedEffect to show one time error message with snack bar
 */
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ComplexGridExamplePage() {
-    val snackBarHostState = remember {
+    val snackbarHostState = remember {
         SnackbarHostState()
     }
     val scope = rememberCoroutineScope()
+    val someFakeStateValue = true
 
     Scaffold(
-        snackbarHost = { SnackbarHost(snackBarHostState) },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
-            FAB(scope, snackBarHostState)
+            FAB(scope, snackbarHostState)
         },
         topBar = {
             AppBar()
         }
     ) { paddingValues ->
+        if (someFakeStateValue) {
+            LaunchedEffect(snackbarHostState) {
+                snackbarHostState.showSnackbar(
+                    message = "Error message",
+                    actionLabel = "Retry message"
+                )
+            }
+        }
+
         ComplexGridExampleBody(paddingValues)
     }
 }
