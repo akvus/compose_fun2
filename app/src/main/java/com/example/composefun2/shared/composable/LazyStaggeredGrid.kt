@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 fun LazyStaggeredGrid(
     columnCount: Int,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    isScrollEnabled: () -> Boolean,
     content: @Composable LazyStaggeredGridScope.() -> Unit
 ) {
     val states: Array<LazyListState> = (0 until columnCount)
@@ -39,7 +40,10 @@ fun LazyStaggeredGrid(
         .toTypedArray()
     val scope = rememberCoroutineScope { Dispatchers.Main.immediate }
     val scroll = rememberScrollableState { delta ->
-        scope.launch { states.forEach { it.scrollBy(-delta) } }
+        if (isScrollEnabled())
+        scope.launch {
+            states.forEach { it.scrollBy(-delta) }
+        }
         delta
     }
     val gridScope = LazyStaggeredGridScope(columnCount)

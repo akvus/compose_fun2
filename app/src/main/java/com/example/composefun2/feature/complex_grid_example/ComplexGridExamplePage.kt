@@ -2,10 +2,14 @@ package com.example.composefun2.feature.complex_grid_example
 // Layout from:
 // https://dribbble.com/shots/15348694-Photo-Editing-App-Exploration/attachments/7108950?mode=media
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -17,17 +21,16 @@ import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.outlined.Send
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -78,23 +81,53 @@ fun ComplexGridExamplePage() {
     }
 }
 
+private const val headerHeight = 270f
+
 @Composable
 private fun ComplexGridExampleBody(paddingValues: PaddingValues) {
-    Surface(modifier = Modifier.padding(paddingValues)) {
+    val scrollState: MutableState<Float> = remember { mutableStateOf(0f) }
+
+    Surface(
+        modifier = Modifier.padding(paddingValues)
+    ) {
         Column(
-            Modifier
-                .width(LocalConfiguration.current.screenWidthDp.dp)
-                .fillMaxWidth()
+            Modifier.absoluteOffset(y = scrollState.value.dp)
         ) {
             Text("Text", Modifier.padding(horizontal = 16.dp))
             Spacer(modifier = Modifier.height(16.dp))
             BirdsSpinner()
             Spacer(modifier = Modifier.height(16.dp))
             ElementsFilters()
-            Spacer(modifier = Modifier.height(16.dp))
-            StaggeredBirds()
-            Spacer(modifier = Modifier.height(16.dp))
         }
+        Box(
+            modifier = Modifier.padding(top = (headerHeight + scrollState.value).dp)
+        ) {
+            StaggeredBirds(
+                onFirstItemPositioned = { offset ->
+                    Log.w(">>>", offset.y.toString())
+                    val h = offset.y * 1.00f
+
+                    scrollState.value =
+                        if (h < -headerHeight) -headerHeight else if (h > 0) 0f else h
+                },
+                isScrollEnabled = {
+                    true
+                }
+            )
+        }
+
+//        Box(
+//            modifier = Modifier.fillMaxSize()
+//                .draggable(
+//                    orientation = Orientation.Vertical,
+//                    state = rememberDraggableState { delta ->
+//                        offset += delta
+//                        val h = scrollState.value + delta
+//                        scrollState.value =
+//                            if (h < -headerHeight) -headerHeight else if (h > 0) 0f else h
+//                    }
+//                )
+//        ) {}
     }
 }
 
@@ -137,17 +170,26 @@ private fun AppBar() {
 }
 
 @Composable
-private fun StaggeredBirds() {
+private fun StaggeredBirds(
+    onFirstItemPositioned: (offset: Offset) -> Unit,
+    isScrollEnabled: () -> Boolean
+) {
     val image: Painter = painterResource(id = R.drawable.birds2)
 
-    LazyStaggeredGrid(
-        columnCount = 2
-    ) {
+    LazyStaggeredGrid(columnCount = 2, isScrollEnabled = isScrollEnabled) {
         for (i in 0 until 10000) {
+            val modifier = if (i == 0) Modifier
+                .onGloballyPositioned { c ->
+                    if (i == 0) {
+                        onFirstItemPositioned(c.positionInParent())
+                    }
+                }
+            else Modifier
+
             item {
                 BirdCard(
                     image,
-                    modifier = Modifier
+                    modifier = modifier
                         .height((200 + 50 * (i % 3 + 1)).dp)
                         .padding(4.dp)
                         .fillMaxSize()
