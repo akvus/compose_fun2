@@ -2,14 +2,10 @@ package com.example.composefun2.feature.complex_grid_example
 // Layout from:
 // https://dribbble.com/shots/15348694-Photo-Editing-App-Exploration/attachments/7108950?mode=media
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -33,6 +29,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composefun2.LocalNavController
 import com.example.composefun2.R
@@ -62,7 +59,7 @@ fun ComplexGridExamplePage() {
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
-            FAB(scope, snackbarHostState)
+            Fab(scope, snackbarHostState)
         },
         topBar = {
             AppBar()
@@ -104,11 +101,9 @@ private fun ComplexGridExampleBody(paddingValues: PaddingValues) {
         ) {
             StaggeredBirds(
                 onFirstItemPositioned = { offset ->
-                    Log.w(">>>", offset.y.toString())
-                    val h = offset.y * 1.00f
-
+                    val y = offset.y
                     scrollState.value =
-                        if (h < -headerHeight) -headerHeight else if (h > 0) 0f else h
+                        if (y < -headerHeight) -headerHeight else if (y > 0) 0f else y
                 },
                 isScrollEnabled = {
                     true
@@ -132,7 +127,7 @@ private fun ComplexGridExampleBody(paddingValues: PaddingValues) {
 }
 
 @Composable
-private fun FAB(
+private fun Fab(
     scope: CoroutineScope,
     snackBarHostState: SnackbarHostState
 ) {
