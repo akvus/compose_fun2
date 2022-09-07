@@ -29,7 +29,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composefun2.LocalNavController
 import com.example.composefun2.R
@@ -46,6 +45,9 @@ import kotlinx.coroutines.launch
 *  - Paddings
 *  - Theming?
 */
+
+private const val headerHeight = 270f
+private val padding = 16.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -78,8 +80,6 @@ fun ComplexGridExamplePage() {
     }
 }
 
-private const val headerHeight = 270f
-
 @Composable
 private fun ComplexGridExampleBody(paddingValues: PaddingValues) {
     val scrollState: MutableState<Float> = remember { mutableStateOf(0f) }
@@ -90,14 +90,18 @@ private fun ComplexGridExampleBody(paddingValues: PaddingValues) {
         Column(
             Modifier.absoluteOffset(y = scrollState.value.dp)
         ) {
-            Text("Text", Modifier.padding(horizontal = 16.dp))
-            Spacer(modifier = Modifier.height(16.dp))
+            Text("Text", Modifier.padding(horizontal = padding))
+            Spacer(modifier = Modifier.height(padding))
             BirdsSpinner()
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(padding))
             ElementsFilters()
         }
         Box(
-            modifier = Modifier.padding(top = (headerHeight + scrollState.value).dp)
+            modifier = Modifier.padding(
+                top = (headerHeight + scrollState.value).dp,
+                start = 8.dp,
+                end = 8.dp
+            )
         ) {
             StaggeredBirds(
                 onFirstItemPositioned = { offset ->
@@ -208,12 +212,15 @@ private fun BirdsSpinner() {
                 image,
                 modifier = Modifier
                     .size(150.dp)
-                    .padding(start = 16.dp)
+                    .padding(start = padding)
                     .background(
                         MaterialTheme.colorScheme.background,
                         RoundedCornerShape(15.dp)
                     )
             )
+        }
+        item {
+            Spacer(modifier = Modifier.width(padding))
         }
     }
 }
@@ -256,6 +263,9 @@ private fun ElementsFilters() {
         itemsIndexed(filters) { _, filter ->
             ElementsFilter(filter)
         }
+        item {
+            Spacer(Modifier.width(padding))
+        }
     }
 }
 
@@ -271,12 +281,15 @@ private fun ElementsFilter(filter: Filter) {
     Card(
         modifier = Modifier
             .height(50.dp)
-            .padding(start = 16.dp)
+            .padding(start = padding)
             .border(BorderStroke(1.dp, Color(0xFFAAAAAA)), shape = RoundedCornerShape(15.dp))
             .background(color = Color.White),
         colors = CardDefaults.cardColors(containerColor = if (filter.active) Color(0xFFEEEEEE) else Color.White)
     ) {
-        Box(modifier = Modifier.padding(horizontal = 16.dp), contentAlignment = Alignment.Center) {
+        Box(
+            modifier = Modifier.padding(horizontal = padding),
+            contentAlignment = Alignment.Center
+        ) {
             Row(modifier = Modifier.fillMaxHeight()) {
                 Icon(
                     filter.icon,
