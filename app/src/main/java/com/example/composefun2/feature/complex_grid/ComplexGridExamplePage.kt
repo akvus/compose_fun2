@@ -1,4 +1,4 @@
-package com.example.composefun2.feature.complex_grid_example
+package com.example.composefun2.feature.complex_grid
 // Layout from:
 // https://dribbble.com/shots/15348694-Photo-Editing-App-Exploration/attachments/7108950?mode=media
 
@@ -38,12 +38,8 @@ import kotlinx.coroutines.launch
 
 /*
 * TODO
-*  - clean the code
 *  - bottom navigation
-*  - circular FAB
-*  - Nested LazyColumns
-*  - Paddings
-*  - Theming?
+*  - find a different work around to scroll Grid together with header (effects)?
 */
 
 private const val headerHeight = 270f

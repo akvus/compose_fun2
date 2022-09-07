@@ -42,21 +42,21 @@ fun ListOfExamplesPage(viewMode: ListOfExamplesViewModel = viewModel()) {
 }
 
 @Composable
-fun Body(examples: List<String>) {
+fun Body(examples: List<Example>) {
     val navController = LocalNavController.current
 
     LazyColumn(contentPadding = PaddingValues(horizontal = 15.dp)) {
         itemsIndexed(
             examples,
-            itemContent = { _, item ->
+            itemContent = { _, example ->
                 Button(
                     colors = ButtonDefaults.textButtonColors(),
                     onClick = {
-                        navController.navigate("example1")
+                        navController.navigate(example.path)
                     },
                     modifier = Modifier.padding(6.dp)
                 ) {
-                    Text(item)
+                    Text(example.name)
                 }
             }
         )
