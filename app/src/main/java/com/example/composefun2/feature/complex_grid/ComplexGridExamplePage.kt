@@ -38,7 +38,6 @@ import kotlinx.coroutines.launch
 
 /*
 * TODO
-*  - bottom navigation
 *  - find a different work around to scroll Grid together with header (effects)?
 */
 
