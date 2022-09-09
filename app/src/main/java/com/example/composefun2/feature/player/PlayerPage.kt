@@ -49,6 +49,8 @@ private object PlayerTheme {
     val padding1 = 8.dp
     val padding2 = 16.dp
     val padding3 = 24.dp
+
+    val DarkGray = Color(0xFF171C26)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,9 +76,7 @@ private fun TopBar() {
 
 @Composable
 private fun BottomNavigation() {
-    BottomAppBar(
-        containerColor = Color.Black
-    ) {
+    BottomAppBar(containerColor = PlayerTheme.DarkGray) {
         Row(
             Modifier
                 .fillMaxWidth()
@@ -150,7 +150,7 @@ private fun ActionButtons() {
             Icons.Outlined.Edit,
             "Shuffle",
             color = Color(0xFFBBBBBB),
-            textColor = Color.Black,
+            textColor = PlayerTheme.DarkGray,
             modifier = Modifier.weight(1f)
         )
     }
@@ -161,7 +161,7 @@ private fun ActionButton(
     imageVector: ImageVector,
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = Color.Black,
+    color: Color = PlayerTheme.DarkGray,
     textColor: Color = Color.White
 ) {
     Button(
@@ -250,7 +250,7 @@ fun CurrentlyPlayedInfo() {
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                Color.Black,
+                PlayerTheme.DarkGray,
                 shape = RoundedCornerShape(
                     topStart = PlayerTheme.cornersRadius,
                     topEnd = PlayerTheme.cornersRadius
