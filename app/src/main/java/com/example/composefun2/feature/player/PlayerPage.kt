@@ -82,6 +82,7 @@ private fun PageBody() {
         PlayListInfo()
         ActionButtons()
         SongsList()
+        CurrentlyPlayedInfo()
     }
 }
 
@@ -135,4 +136,8 @@ private fun MusicFileListItem() {
     Row {
         Text("TODO")
     }
+}
+
+@Composable fun CurrentlyPlayedInfo() {
+    Text("Currently played")
 }
