@@ -91,32 +91,27 @@ private fun BottomNavIcon(icon: ImageVector, contentDescription: String, onClick
 
 @Composable
 private fun PageBody() {
-    Column {
+    Column(Modifier.fillMaxHeight()) {
         Box(
             Modifier.padding(
                 start = PlayerTheme.padding2,
                 end = PlayerTheme.padding3,
-                top = PlayerTheme.padding2
+                top = PlayerTheme.padding1
             )
         ) {
             PlayListInfo()
         }
         Spacer(Modifier.height(PlayerTheme.padding2))
-        Column(
-            modifier = Modifier.padding(horizontal = PlayerTheme.padding3)
-        ) {
-            ActionButtons()
-            Spacer(Modifier.height(PlayerTheme.padding2))
-            SongsList()
-        }
-        Spacer(Modifier.weight(1f))
+        ActionButtons(Modifier.padding(horizontal = PlayerTheme.padding3))
+        Spacer(Modifier.height(PlayerTheme.padding2))
+        SongsList(Modifier.weight(1f).padding(horizontal = PlayerTheme.padding3))
         CurrentlyPlayedInfo()
     }
 }
 
 @Composable
-private fun SongsList() {
-    LazyColumn {
+private fun SongsList(modifier: Modifier) {
+    LazyColumn(modifier) {
         items(20) {
             MusicFileListItem(it + 1)
         }
@@ -155,8 +150,8 @@ private fun MusicFileListItem(index: Int) {
 }
 
 @Composable
-private fun ActionButtons() {
-    Row {
+private fun ActionButtons(modifier: Modifier) {
+    Row(modifier) {
         ActionButton(Icons.Outlined.PlayArrow, "Play", modifier = Modifier.weight(1f))
         Spacer(Modifier.width(PlayerTheme.padding2))
         ActionButton(
@@ -257,6 +252,7 @@ fun CurrentlyPlayedInfo() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .height(50.dp)
             .background(
                 PlayerTheme.DarkGray,
                 shape = RoundedCornerShape(
