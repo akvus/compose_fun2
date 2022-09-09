@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.sp
 import com.example.composefun2.LocalNavController
 import com.example.composefun2.R
 
+// Based on: https://lh3.googleusercontent.com/XRDT_NVtw5dh--ckNcyFDi46YycGfLqmuEEdxCeM6wviveYmfEkX7ReLWq53kRxdUDjba1ayE-JLGagHDSGmFgPjfvpW2-wYesOaTyw5C58ooxNeTOiigF5i38tSqoOk2-V5Av0t
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
