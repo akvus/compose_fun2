@@ -14,7 +14,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -37,6 +36,10 @@ fun PlayerPage() {
             PageBody()
         }
     }
+}
+
+private object PlayerTheme {
+    val cornersRadius = 10.dp
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,7 +70,13 @@ private fun BottomNavigation() {
     ) {
         Row(
             Modifier.fillMaxWidth()
-                .background(Color.White, shape = RoundedCornerShape(10.dp)),
+                .background(
+                    Color.White,
+                    shape = RoundedCornerShape(
+                        topStart = PlayerTheme.cornersRadius,
+                        topEnd = PlayerTheme.cornersRadius
+                    )
+                ),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             BottomNavIcon(icon = Icons.Outlined.Home, contentDescription = "Home") {
@@ -161,7 +170,15 @@ private fun MusicFileListItem() {
 @Composable
 fun CurrentlyPlayedInfo() {
     Row(
-        modifier = Modifier.fillMaxWidth().background(Color.Black).clip(RoundedCornerShape(10.dp))
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                Color.Black,
+                shape = RoundedCornerShape(
+                    topStart = PlayerTheme.cornersRadius,
+                    topEnd = PlayerTheme.cornersRadius
+                )
+            )
     ) {
         Text("TODO")
         Text("Currently played")
