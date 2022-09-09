@@ -106,7 +106,7 @@ private fun PageBody() {
         Spacer(Modifier.height(PlayerTheme.padding2))
         ActionButtons(Modifier.padding(horizontal = PlayerTheme.padding3))
         Spacer(Modifier.height(PlayerTheme.padding2))
-        SongsList(Modifier.weight(1f).padding(horizontal = PlayerTheme.padding3))
+        SongsList(Modifier.weight(1f))
         CurrentlyPlayedInfo()
     }
 }
@@ -122,7 +122,10 @@ private fun SongsList(modifier: Modifier) {
 
 @Composable
 private fun MusicFileListItem(index: Int) {
-    Row(Modifier.padding(vertical = PlayerTheme.padding1)) {
+    Row(
+        Modifier.clickable { }
+            .padding(vertical = PlayerTheme.padding1, horizontal = PlayerTheme.padding3)
+    ) {
         Text("%02d".format(index), Modifier.padding(vertical = PlayerTheme.padding1))
         Spacer(Modifier.width(PlayerTheme.padding3))
         Column {
