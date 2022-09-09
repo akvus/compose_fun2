@@ -250,9 +250,10 @@ private fun PlayListInfo() {
 @Composable
 fun CurrentlyPlayedInfo() {
     Row(
+
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)
+            .height(62.dp)
             .background(
                 PlayerTheme.DarkGray,
                 shape = RoundedCornerShape(
@@ -260,9 +261,50 @@ fun CurrentlyPlayedInfo() {
                     topEnd = PlayerTheme.cornersRadius
                 )
             )
+            .padding(PlayerTheme.padding1),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Text("TODO")
-        Text("Currently played")
+        Image(
+            painter = painterResource(id = R.drawable.birds2),
+            modifier = Modifier
+                .padding(PlayerTheme.padding1)
+                .size(50.dp),
+            contentScale = ContentScale.FillBounds,
+            contentDescription = "Birds"
+        )
+        Spacer(Modifier.width(PlayerTheme.padding3))
+        Column {
+            Text(
+                "Nocturne 333",
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                color = Color.White
+            )
+            Text(
+                "Chopin",
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                color = PlayerTheme.LightGray
+            )
+        }
+        Spacer(Modifier.weight(1f))
+        Icon(
+            Icons.Outlined.FavoriteBorder,
+            contentDescription = "Favourite",
+            tint = Color.White,
+            modifier = Modifier.size(30.dp).clickable { }
+        )
+        Spacer(Modifier.width(PlayerTheme.padding2))
+        Icon(
+            Icons.Outlined.Close,
+            contentDescription = "Pause",
+            tint = PlayerTheme.DarkGray,
+            modifier = Modifier.size(30.dp).background(
+                color = Color.White,
+                shape = RoundedCornerShape(8.dp)
+            ).clickable { }
+        )
+        Spacer(Modifier.width(PlayerTheme.padding1))
     }
 }
 
