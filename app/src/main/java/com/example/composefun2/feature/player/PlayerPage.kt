@@ -75,33 +75,6 @@ private fun TopBar() {
 }
 
 @Composable
-private fun BottomNavigation() {
-    BottomAppBar(containerColor = PlayerTheme.DarkGray) {
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .background(
-                    Color.White,
-                    shape = RoundedCornerShape(
-                        topStart = PlayerTheme.cornersRadius,
-                        topEnd = PlayerTheme.cornersRadius
-                    )
-                ),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            BottomNavIcon(icon = Icons.Outlined.Home, contentDescription = "Home") {
-            }
-            BottomNavIcon(icon = Icons.Outlined.Search, contentDescription = "Search") {
-            }
-            BottomNavIcon(icon = Icons.Outlined.List, contentDescription = "Library") {
-            }
-            BottomNavIcon(icon = Icons.Outlined.Star, contentDescription = "Hotlist") {
-            }
-        }
-    }
-}
-
-@Composable
 private fun BottomNavIcon(icon: ImageVector, contentDescription: String, onClick: () -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -117,16 +90,23 @@ private fun BottomNavIcon(icon: ImageVector, contentDescription: String, onClick
 @Composable
 private fun PageBody() {
     Column {
-        Column(
-            modifier = Modifier.padding(PlayerTheme.padding3)
+        Box(
+            Modifier.padding(
+                start = PlayerTheme.padding2,
+                end = PlayerTheme.padding3,
+                top = PlayerTheme.padding2
+            )
         ) {
             PlayListInfo()
-            Spacer(Modifier.height(PlayerTheme.padding2))
+        }
+        Spacer(Modifier.height(PlayerTheme.padding2))
+        Column(
+            modifier = Modifier.padding(horizontal = PlayerTheme.padding3)
+        ) {
             ActionButtons()
             Spacer(Modifier.height(PlayerTheme.padding2))
             SongsList()
         }
-
         Spacer(Modifier.weight(1f))
         CurrentlyPlayedInfo()
     }
@@ -149,7 +129,7 @@ private fun ActionButtons() {
         ActionButton(
             Icons.Outlined.Edit,
             "Shuffle",
-            color = Color(0xFFBBBBBB),
+            color = Color(0xFFDDDDDD),
             textColor = PlayerTheme.DarkGray,
             modifier = Modifier.weight(1f)
         )
@@ -259,5 +239,32 @@ fun CurrentlyPlayedInfo() {
     ) {
         Text("TODO")
         Text("Currently played")
+    }
+}
+
+@Composable
+private fun BottomNavigation() {
+    BottomAppBar(containerColor = PlayerTheme.DarkGray) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .background(
+                    Color.White,
+                    shape = RoundedCornerShape(
+                        topStart = PlayerTheme.cornersRadius,
+                        topEnd = PlayerTheme.cornersRadius
+                    )
+                ),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            BottomNavIcon(icon = Icons.Outlined.Home, contentDescription = "Home") {
+            }
+            BottomNavIcon(icon = Icons.Outlined.Search, contentDescription = "Search") {
+            }
+            BottomNavIcon(icon = Icons.Outlined.List, contentDescription = "Library") {
+            }
+            BottomNavIcon(icon = Icons.Outlined.Star, contentDescription = "Hotlist") {
+            }
+        }
     }
 }
