@@ -218,6 +218,7 @@ private fun PlayListInfo() {
                 "Album * 10 songs * 2022",
                 fontSize = 12.sp,
                 color = PlayerTheme.MiddleGray,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(Modifier.height(2.dp))
@@ -234,6 +235,7 @@ private fun PlayListInfo() {
                 fontSize = 14.sp,
                 color = PlayerTheme.MiddleGray,
                 textDecoration = TextDecoration.Underline,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(Modifier.weight(1f))
