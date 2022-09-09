@@ -74,6 +74,13 @@ private fun TopBar() {
                     contentDescription = "Go back"
                 )
             }
+        },
+        actions = {
+            Icon(
+                Icons.Outlined.Search,
+                contentDescription = "Search",
+                modifier = Modifier.clickable { }.padding(16.dp)
+            )
         }
     )
 }

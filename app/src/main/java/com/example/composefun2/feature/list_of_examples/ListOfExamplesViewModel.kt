@@ -11,9 +11,9 @@ class ListOfExamplesViewModel : ViewModel() {
     val uiState = mutableStateOf(
         ListOfExamplesState(
             examples = listOf(
-                Example(name = "Complex grid", "complex_grid_page"),
-                Example(name = "Player", "player_page")
-
+                Example("Player", "player_page"),
+                Example("Content with chart", "content_with_chart_page"),
+                Example("Complex grid", "complex_grid_page")
             )
         )
     )

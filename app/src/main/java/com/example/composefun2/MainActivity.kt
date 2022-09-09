@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.composefun2.feature.complex_grid.ComplexGridExamplePage
+import com.example.composefun2.feature.content_with_chart.ContentWithChartPage
 import com.example.composefun2.feature.list_of_examples.ListOfExamplesPage
 import com.example.composefun2.feature.player.PlayerPage
 import com.example.composefun2.ui.theme.ComposeFun2Theme
@@ -24,6 +25,7 @@ class MainActivity : ComponentActivity() {
                         composable("example_list") { ListOfExamplesPage() }
                         composable("complex_grid_page") { ComplexGridExamplePage() }
                         composable("player_page") { PlayerPage() }
+                        composable("content_with_chart_page") { ContentWithChartPage() }
                     }
                 }
             }
