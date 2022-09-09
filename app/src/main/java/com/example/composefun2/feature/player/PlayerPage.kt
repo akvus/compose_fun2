@@ -30,7 +30,7 @@ import com.example.composefun2.R
 fun PlayerPage() {
     Scaffold(
         topBar = { TopBar() },
-        bottomBar = { BottomBar() }
+        bottomBar = { BottomNavigation() }
     ) {
         Box(Modifier.padding(it)) {
             PageBody()
@@ -60,7 +60,7 @@ private fun TopBar() {
 }
 
 @Composable
-private fun BottomBar() {
+private fun BottomNavigation() {
     BottomAppBar(
         containerColor = Color.Black
     ) {
