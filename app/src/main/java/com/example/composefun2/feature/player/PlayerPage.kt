@@ -14,11 +14,16 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.composefun2.LocalNavController
@@ -38,8 +43,12 @@ fun PlayerPage() {
     }
 }
 
+// TODO temporary solution, should use LocalComposition and support dark mode
 private object PlayerTheme {
     val cornersRadius = 10.dp
+    val padding1 = 8.dp
+    val padding2 = 16.dp
+    val padding3 = 24.dp
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,7 +78,8 @@ private fun BottomNavigation() {
         containerColor = Color.Black
     ) {
         Row(
-            Modifier.fillMaxWidth()
+            Modifier
+                .fillMaxWidth()
                 .background(
                     Color.White,
                     shape = RoundedCornerShape(
@@ -97,7 +107,7 @@ private fun BottomNavIcon(icon: ImageVector, contentDescription: String, onClick
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .clickable { onClick() }
-            .padding(16.dp)
+            .padding(PlayerTheme.padding2)
     ) {
         Icon(icon, contentDescription = contentDescription)
         Text(contentDescription, fontSize = 10.sp)
@@ -107,9 +117,16 @@ private fun BottomNavIcon(icon: ImageVector, contentDescription: String, onClick
 @Composable
 private fun PageBody() {
     Column {
-        PlayListInfo()
-        ActionButtons()
-        SongsList()
+        Column(
+            modifier = Modifier.padding(PlayerTheme.padding3)
+        ) {
+            PlayListInfo()
+            Spacer(Modifier.height(PlayerTheme.padding2))
+            ActionButtons()
+            Spacer(Modifier.height(PlayerTheme.padding2))
+            SongsList()
+        }
+
         Spacer(Modifier.weight(1f))
         CurrentlyPlayedInfo()
     }
@@ -140,21 +157,57 @@ private fun ActionButtons() {
 private fun PlayListInfo() {
     val image: Painter = painterResource(id = R.drawable.birds2)
 
-    Row {
+    Row(
+        Modifier.height(120.dp + PlayerTheme.padding2)
+    ) {
+        // TODO: this image should be aligned to padding on left, was now moved because of adding shadow - fix
         Image(
             painter = image,
-            modifier = Modifier.size(120.dp),
+            modifier = Modifier
+                .shadow(
+                    elevation = 16.dp,
+                    shape = RoundedCornerShape(PlayerTheme.padding2),
+                    clip = false
+                )
+                .padding(PlayerTheme.padding1)
+                .size(120.dp)
+                .clip(RoundedCornerShape(PlayerTheme.padding2)),
             contentScale = ContentScale.FillBounds,
             contentDescription = "Birds"
         )
-        Column {
-            Text("Album * 10 songs * 2022")
-            Text("Charcoal")
-            Text("Chopin")
+        Spacer(Modifier.width(PlayerTheme.padding3))
+        Column(Modifier.padding(vertical = PlayerTheme.padding1)) {
+            Text(
+                "Album * 10 songs * 2022",
+                fontSize = 12.sp,
+                color = Color.Gray,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(Modifier.height(2.dp))
+            Text(
+                "My best playlist has a long name",
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                "Chopin",
+                fontSize = 14.sp,
+                color = Color.Gray,
+                textDecoration = TextDecoration.Underline,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(Modifier.weight(1f))
             Row {
-                Icon(Icons.Outlined.Share, contentDescription = "Share")
-                Icon(Icons.Outlined.Share, contentDescription = "Share")
-                Icon(Icons.Outlined.Share, contentDescription = "Share")
+                val modifier = Modifier.size(20.dp)
+
+                Icon(Icons.Outlined.Place, contentDescription = "Play", modifier)
+                Spacer(Modifier.width(16.dp))
+                Icon(Icons.Outlined.Share, contentDescription = "Share", modifier)
+                Spacer(Modifier.width(16.dp))
+                Icon(Icons.Outlined.Refresh, contentDescription = "Refresh", modifier)
             }
         }
     }
