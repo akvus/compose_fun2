@@ -51,6 +51,8 @@ private object PlayerTheme {
     val padding3 = 24.dp
 
     val DarkGray = Color(0xFF171C26)
+    val MiddleGray = Color.Gray
+    val LightGray = Color(0xFFDDDDDD)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -115,9 +117,40 @@ private fun PageBody() {
 @Composable
 private fun SongsList() {
     LazyColumn {
-        item {
-            MusicFileListItem()
+        items(20) {
+            MusicFileListItem(it + 1)
         }
+    }
+}
+
+@Composable
+private fun MusicFileListItem(index: Int) {
+    Row(Modifier.padding(vertical = PlayerTheme.padding1)) {
+        Text("%02d".format(index), Modifier.padding(vertical = PlayerTheme.padding1))
+        Spacer(Modifier.width(PlayerTheme.padding3))
+        Column {
+            Text(
+                "The sound of loudness",
+                color = PlayerTheme.DarkGray,
+                fontSize = 14.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                "Gravers ⬤ 3:55",
+                color = PlayerTheme.MiddleGray,
+                fontSize = 12.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        Icon(
+            imageVector = Icons.Outlined.MoreVert,
+            contentDescription = "More",
+            tint = PlayerTheme.LightGray
+        )
     }
 }
 
@@ -184,7 +217,7 @@ private fun PlayListInfo() {
             Text(
                 "Album * 10 songs * 2022",
                 fontSize = 12.sp,
-                color = Color.Gray,
+                color = PlayerTheme.MiddleGray,
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(Modifier.height(2.dp))
@@ -199,7 +232,7 @@ private fun PlayListInfo() {
             Text(
                 "Chopin",
                 fontSize = 14.sp,
-                color = Color.Gray,
+                color = PlayerTheme.MiddleGray,
                 textDecoration = TextDecoration.Underline,
                 overflow = TextOverflow.Ellipsis
             )
@@ -214,13 +247,6 @@ private fun PlayListInfo() {
                 Icon(Icons.Outlined.Refresh, contentDescription = "Refresh", modifier)
             }
         }
-    }
-}
-
-@Composable
-private fun MusicFileListItem() {
-    Row {
-        Text("Currently played")
     }
 }
 
