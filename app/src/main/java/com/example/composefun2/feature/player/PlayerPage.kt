@@ -3,6 +3,7 @@ package com.example.composefun2.feature.player
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -66,21 +67,29 @@ private fun BottomNavigation() {
     ) {
         Row(
             Modifier.fillMaxWidth()
-                .background(Color.White, shape = RoundedCornerShape(10.dp))
-                .padding(vertical = 16.dp),
+                .background(Color.White, shape = RoundedCornerShape(10.dp)),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            BottomNavIcon(icon = Icons.Outlined.Home, contentDescription = "Home")
-            BottomNavIcon(icon = Icons.Outlined.Search, contentDescription = "Search")
-            BottomNavIcon(icon = Icons.Outlined.List, contentDescription = "Library")
-            BottomNavIcon(icon = Icons.Outlined.Star, contentDescription = "Hotlist")
+            BottomNavIcon(icon = Icons.Outlined.Home, contentDescription = "Home") {
+            }
+            BottomNavIcon(icon = Icons.Outlined.Search, contentDescription = "Search") {
+            }
+            BottomNavIcon(icon = Icons.Outlined.List, contentDescription = "Library") {
+            }
+            BottomNavIcon(icon = Icons.Outlined.Star, contentDescription = "Hotlist") {
+            }
         }
     }
 }
 
 @Composable
-private fun BottomNavIcon(icon: ImageVector, contentDescription: String) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+private fun BottomNavIcon(icon: ImageVector, contentDescription: String, onClick: () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .clickable { onClick() }
+            .padding(16.dp)
+    ) {
         Icon(icon, contentDescription = contentDescription)
         Text(contentDescription, fontSize = 10.sp)
     }
