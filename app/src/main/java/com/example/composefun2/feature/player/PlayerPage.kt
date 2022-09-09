@@ -144,21 +144,45 @@ private fun SongsList() {
 @Composable
 private fun ActionButtons() {
     Row {
-        Button(onClick = { /*TODO*/ }) {
-            Text("Play")
-        }
-        Button(onClick = { /*TODO*/ }) {
-            Text("Shuffle")
-        }
+        ActionButton(Icons.Outlined.PlayArrow, "Play", modifier = Modifier.weight(1f))
+        Spacer(Modifier.width(PlayerTheme.padding2))
+        ActionButton(
+            Icons.Outlined.Edit,
+            "Shuffle",
+            color = Color(0xFFBBBBBB),
+            textColor = Color.Black,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+@Composable
+private fun ActionButton(
+    imageVector: ImageVector,
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = Color.Black,
+    textColor: Color = Color.White
+) {
+    Button(
+        onClick = { /*TODO*/ },
+        modifier = modifier.height(50.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = color),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Icon(imageVector = imageVector, contentDescription = text, tint = textColor)
+        Spacer(Modifier.width(PlayerTheme.padding1))
+        Text(text, color = textColor)
     }
 }
 
 @Composable
 private fun PlayListInfo() {
     val image: Painter = painterResource(id = R.drawable.birds2)
+    val imageSize = 110.dp
 
     Row(
-        Modifier.height(120.dp + PlayerTheme.padding2)
+        Modifier.height(imageSize + PlayerTheme.padding2)
     ) {
         // TODO: this image should be aligned to padding on left, was now moved because of adding shadow - fix
         Image(
@@ -170,7 +194,7 @@ private fun PlayListInfo() {
                     clip = false
                 )
                 .padding(PlayerTheme.padding1)
-                .size(120.dp)
+                .size(imageSize)
                 .clip(RoundedCornerShape(PlayerTheme.padding2)),
             contentScale = ContentScale.FillBounds,
             contentDescription = "Birds"
@@ -186,7 +210,7 @@ private fun PlayListInfo() {
             Spacer(Modifier.height(2.dp))
             Text(
                 "My best playlist has a long name",
-                fontSize = 30.sp,
+                fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
