@@ -38,40 +38,50 @@ fun ListOfExamplesPage(viewMode: ListOfExamplesViewModel = viewModel()) {
             modifier = Modifier.fillMaxSize().padding(paddingValues),
             color = MaterialTheme.colorScheme.background
         ) {
-            Body(uiState.value.examples)
+            PageBody(uiState.value.examples)
         }
     }
 }
 
 @Composable
-fun Body(examples: List<Example>) {
-    val navController = LocalNavController.current
-
+private fun PageBody(examples: List<Example>) {
     LazyColumn {
         itemsIndexed(
             examples,
             itemContent = { _, example ->
-                Row(
-                    Modifier.clickable {
-                        navController.navigate(example.path)
-                    }
-                        .padding(horizontal = 30.dp, vertical = 16.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.clouds),
-                        modifier = Modifier.size(30.dp).clip(RoundedCornerShape(15.dp)),
-                        contentScale = ContentScale.FillBounds,
-                        contentDescription = "Clouds"
-                    )
-                    Spacer(Modifier.width(16.dp))
-                    Text(
-                        example.name,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                }
+                ExampleListItem(example)
             }
+        )
+    }
+}
+
+@Composable
+private fun ExampleListItem(
+    example: Example
+) {
+    val navController = LocalNavController.current
+
+    Row(
+        Modifier
+            .clickable {
+                navController.navigate(example.path)
+            }
+            .padding(horizontal = 30.dp, vertical = 16.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.clouds),
+            modifier = Modifier
+                .size(30.dp)
+                .clip(RoundedCornerShape(15.dp)),
+            contentScale = ContentScale.FillBounds,
+            contentDescription = "Clouds"
+        )
+        Spacer(Modifier.width(16.dp))
+        Text(
+            example.name,
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }
@@ -79,6 +89,14 @@ fun Body(examples: List<Example>) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
+    val list = buildList {
+        for (i in 0..100)
+            add(
+                Example("Example", "some_path")
+            )
+    }
+
     ComposeFun2Theme {
+        PageBody(examples = list)
     }
 }
