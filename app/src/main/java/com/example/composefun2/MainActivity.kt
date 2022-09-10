@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
                         composable("example_list") { ListOfExamplesPage() }
                         composable("complex_grid_page") { ComplexGridExamplePage() }
                         composable("player_page") { PlayerPage() }
-                        composable("content_with_chart_page") { ContentWithChartPage() }
+                        composable("weather_page") { ContentWithChartPage() }
                     }
                 }
             }

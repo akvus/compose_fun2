@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.composefun2.LocalNavController
 
-// Based onhttps://lh3.googleusercontent.com/ejV1s6bC4cfMwhq38-bjOCNmFM0KoSfBjyW6dtUhkzFdg9JhiM7aTCj9qf4BDm0DdgY8igLCdweqmUo0lRg3DaYfceHNRy64RbGahlfjpDJtwUEW127kEUcTUQ9DgkK8LIP_7D3E
+// Based on https://dribbble.com/shots/9691493-UI-Design-Beautiful-Weather-App-Experience-Concept
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,9 +33,9 @@ fun ContentWithChartPage() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TopBar() {
-    SmallTopAppBar(
+    LargeTopAppBar(
         title = {
-            Text("Content with a chart")
+            Text("Weather app")
         },
         navigationIcon = {
             val navController = LocalNavController.current
@@ -79,7 +79,6 @@ private fun PageHeader() {
 
 @Composable
 private fun Chart() {
-    Text("TODO")
 }
 
 @Composable

@@ -12,7 +12,7 @@ class ListOfExamplesViewModel : ViewModel() {
         ListOfExamplesState(
             examples = listOf(
                 Example("Player", "player_page"),
-                Example("Content with chart", "content_with_chart_page"),
+                Example("Weather app", "weather_page"),
                 Example("Complex grid", "complex_grid_page")
             )
         )
