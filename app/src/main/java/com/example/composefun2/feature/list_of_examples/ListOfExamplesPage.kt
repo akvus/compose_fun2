@@ -1,19 +1,24 @@
 package com.example.composefun2.feature.list_of_examples
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.composefun2.LocalNavController
+import com.example.composefun2.R
 import com.example.composefun2.ui.theme.ComposeFun2Theme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -25,10 +30,7 @@ fun ListOfExamplesPage(viewMode: ListOfExamplesViewModel = viewModel()) {
     Scaffold(
         topBar = {
             SmallTopAppBar(
-                title = { Text("Fun with Jetpack Compose") },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = Color.LightGray
-                )
+                title = { Text("Fun with Jetpack Compose") }
             )
         }
     ) { paddingValues ->
@@ -45,18 +47,29 @@ fun ListOfExamplesPage(viewMode: ListOfExamplesViewModel = viewModel()) {
 fun Body(examples: List<Example>) {
     val navController = LocalNavController.current
 
-    LazyColumn(contentPadding = PaddingValues(horizontal = 15.dp)) {
+    LazyColumn {
         itemsIndexed(
             examples,
             itemContent = { _, example ->
-                Button(
-                    colors = ButtonDefaults.textButtonColors(),
-                    onClick = {
+                Row(
+                    Modifier.clickable {
                         navController.navigate(example.path)
-                    },
-                    modifier = Modifier.padding(6.dp)
+                    }
+                        .padding(horizontal = 30.dp, vertical = 16.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(example.name)
+                    Image(
+                        painter = painterResource(id = R.drawable.clouds),
+                        modifier = Modifier.size(30.dp).clip(RoundedCornerShape(15.dp)),
+                        contentScale = ContentScale.FillBounds,
+                        contentDescription = "Clouds"
+                    )
+                    Spacer(Modifier.width(16.dp))
+                    Text(
+                        example.name,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
                 }
             }
         )
