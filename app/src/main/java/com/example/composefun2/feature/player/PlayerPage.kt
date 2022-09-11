@@ -12,6 +12,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -163,8 +165,17 @@ private fun MusicFileListItem(index: Int) {
 
 @Composable
 private fun ActionButtons(modifier: Modifier) {
+    val isPlaying = rememberSaveable { mutableStateOf(false) }
+
     Row(modifier) {
-        ActionButton(Icons.Outlined.PlayArrow, "Play", modifier = Modifier.weight(1f))
+        ActionButton(
+            Icons.Outlined.PlayArrow,
+            if (isPlaying.value) "Pause" else "Play",
+            modifier = Modifier.weight(1f),
+            onClick = {
+                isPlaying.value = !isPlaying.value
+            }
+        )
         Spacer(Modifier.width(PlayerTheme.padding2))
         ActionButton(
             Icons.Outlined.Edit,
@@ -182,10 +193,11 @@ private fun ActionButton(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = PlayerTheme.DarkGray,
-    textColor: Color = Color.White
+    textColor: Color = Color.White,
+    onClick: () -> Unit = {}
 ) {
     Button(
-        onClick = { /*TODO*/ },
+        onClick = onClick,
         modifier = modifier.height(50.dp),
         colors = ButtonDefaults.buttonColors(containerColor = color),
         shape = RoundedCornerShape(16.dp)
