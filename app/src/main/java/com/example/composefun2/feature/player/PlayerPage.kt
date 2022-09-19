@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.composefun2.LocalNavController
 import com.example.composefun2.R
 
@@ -36,7 +37,9 @@ import com.example.composefun2.R
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlayerPage() {
+fun PlayerPage(
+    playerPageViewModel: PlayerPageViewModel = hiltViewModel(),
+) {
     Scaffold(
         topBar = { TopBar() },
         bottomBar = { BottomNavigation() }

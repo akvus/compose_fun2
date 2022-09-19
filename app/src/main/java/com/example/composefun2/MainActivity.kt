@@ -12,7 +12,9 @@ import com.example.composefun2.feature.content_with_chart.ContentWithChartPage
 import com.example.composefun2.feature.list_of_examples.ListOfExamplesPage
 import com.example.composefun2.feature.player.PlayerPage
 import com.example.composefun2.ui.theme.ComposeFun2Theme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
