@@ -1,5 +1,6 @@
 package com.example.composefun2.feature.player
 
+import androidx.compose.runtime.compositionLocalOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composefun2.util.WhileUiSubscribed
@@ -11,6 +12,8 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 data class PlayerPageState(val isPlaying: Boolean = false)
+
+val LocalPlayerPageState = compositionLocalOf { PlayerPageState() }
 
 @HiltViewModel
 class PlayerPageViewModel @Inject constructor() : ViewModel() {

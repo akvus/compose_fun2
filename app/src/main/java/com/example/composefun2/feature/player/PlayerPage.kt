@@ -12,8 +12,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,23 +28,29 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.composefun2.LocalNavController
 import com.example.composefun2.R
 
 // Based on: https://lh3.googleusercontent.com/XRDT_NVtw5dh--ckNcyFDi46YycGfLqmuEEdxCeM6wviveYmfEkX7ReLWq53kRxdUDjba1ayE-JLGagHDSGmFgPjfvpW2-wYesOaTyw5C58ooxNeTOiigF5i38tSqoOk2-V5Av0t
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLifecycleComposeApi::class)
 @Composable
 fun PlayerPage(
-    playerPageViewModel: PlayerPageViewModel = hiltViewModel(),
+    playerPageViewModel: PlayerPageViewModel = hiltViewModel()
 ) {
-    Scaffold(
-        topBar = { TopBar() },
-        bottomBar = { BottomNavigation() }
-    ) {
-        Box(Modifier.padding(it)) {
-            PageBody()
+    val uiState = playerPageViewModel.uiState.collectAsStateWithLifecycle()
+
+    CompositionLocalProvider(LocalPlayerPageState provides uiState.value) {
+        Scaffold(
+            topBar = { TopBar() },
+            bottomBar = { BottomNavigation() }
+        ) {
+            Box(Modifier.padding(it)) {
+                PageBody()
+            }
         }
     }
 }
@@ -156,16 +161,15 @@ private fun MusicFileListItem(index: Int) {
 
 @Composable
 private fun ActionButtons(modifier: Modifier) {
-    val isPlaying = rememberSaveable { mutableStateOf(false) }
+    val isPlaying = LocalPlayerPageState.current.isPlaying
+    val viewModel: PlayerPageViewModel = hiltViewModel()
 
     Row(modifier) {
         ActionButton(
             Icons.Outlined.PlayArrow,
-            if (isPlaying.value) "Pause" else "Play",
+            if (isPlaying) "Pause" else "Play",
             modifier = Modifier.weight(1f),
-            onClick = {
-                isPlaying.value = !isPlaying.value
-            }
+            onClick = viewModel::onPlayingChanged
         )
         Spacer(Modifier.width(PlayerPageTheme.padding2))
         ActionButton(
