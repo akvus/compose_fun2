@@ -50,18 +50,6 @@ fun PlayerPage(
     }
 }
 
-// TODO temporary solution, should use LocalComposition and support dark mode
-private object PlayerTheme {
-    val cornersRadius = 10.dp
-    val padding1 = 8.dp
-    val padding2 = 16.dp
-    val padding3 = 24.dp
-
-    val DarkGray = Color(0xFF171C26)
-    val MiddleGray = Color.Gray
-    val LightGray = Color(0xFFDDDDDD)
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TopBar() {
@@ -96,7 +84,7 @@ private fun BottomNavIcon(icon: ImageVector, contentDescription: String, onClick
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .clickable { onClick() }
-            .padding(PlayerTheme.padding2)
+            .padding(PlayerPageTheme.padding2)
     ) {
         Icon(icon, contentDescription = contentDescription)
         Text(contentDescription, fontSize = 10.sp)
@@ -108,16 +96,16 @@ private fun PageBody() {
     Column(Modifier.fillMaxHeight()) {
         Box(
             Modifier.padding(
-                start = PlayerTheme.padding2,
-                end = PlayerTheme.padding3,
-                top = PlayerTheme.padding1
+                start = PlayerPageTheme.padding2,
+                end = PlayerPageTheme.padding3,
+                top = PlayerPageTheme.padding1
             )
         ) {
             PlayListInfo()
         }
-        Spacer(Modifier.height(PlayerTheme.padding2))
-        ActionButtons(Modifier.padding(horizontal = PlayerTheme.padding3))
-        Spacer(Modifier.height(PlayerTheme.padding2))
+        Spacer(Modifier.height(PlayerPageTheme.padding2))
+        ActionButtons(Modifier.padding(horizontal = PlayerPageTheme.padding3))
+        Spacer(Modifier.height(PlayerPageTheme.padding2))
         SongsList(Modifier.weight(1f))
         CurrentlyPlayedInfo()
     }
@@ -136,14 +124,14 @@ private fun SongsList(modifier: Modifier) {
 private fun MusicFileListItem(index: Int) {
     Row(
         Modifier.clickable { }
-            .padding(vertical = PlayerTheme.padding1, horizontal = PlayerTheme.padding3)
+            .padding(vertical = PlayerPageTheme.padding1, horizontal = PlayerPageTheme.padding3)
     ) {
-        Text("%02d".format(index), Modifier.padding(vertical = PlayerTheme.padding1))
-        Spacer(Modifier.width(PlayerTheme.padding3))
+        Text("%02d".format(index), Modifier.padding(vertical = PlayerPageTheme.padding1))
+        Spacer(Modifier.width(PlayerPageTheme.padding3))
         Column {
             Text(
                 "The sound of loudness",
-                color = PlayerTheme.DarkGray,
+                color = PlayerPageTheme.DarkGray,
                 fontSize = 14.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -151,7 +139,7 @@ private fun MusicFileListItem(index: Int) {
             Spacer(Modifier.height(4.dp))
             Text(
                 "Gravers ⬤ 3:55",
-                color = PlayerTheme.MiddleGray,
+                color = PlayerPageTheme.MiddleGray,
                 fontSize = 12.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -161,7 +149,7 @@ private fun MusicFileListItem(index: Int) {
         Icon(
             imageVector = Icons.Outlined.MoreVert,
             contentDescription = "More",
-            tint = PlayerTheme.LightGray
+            tint = PlayerPageTheme.LightGray
         )
     }
 }
@@ -179,12 +167,12 @@ private fun ActionButtons(modifier: Modifier) {
                 isPlaying.value = !isPlaying.value
             }
         )
-        Spacer(Modifier.width(PlayerTheme.padding2))
+        Spacer(Modifier.width(PlayerPageTheme.padding2))
         ActionButton(
             Icons.Outlined.Edit,
             "Shuffle",
             color = Color(0xFFDDDDDD),
-            textColor = PlayerTheme.DarkGray,
+            textColor = PlayerPageTheme.DarkGray,
             modifier = Modifier.weight(1f)
         )
     }
@@ -195,7 +183,7 @@ private fun ActionButton(
     imageVector: ImageVector,
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = PlayerTheme.DarkGray,
+    color: Color = PlayerPageTheme.DarkGray,
     textColor: Color = Color.White,
     onClick: () -> Unit = {}
 ) {
@@ -206,7 +194,7 @@ private fun ActionButton(
         shape = RoundedCornerShape(16.dp)
     ) {
         Icon(imageVector = imageVector, contentDescription = text, tint = textColor)
-        Spacer(Modifier.width(PlayerTheme.padding1))
+        Spacer(Modifier.width(PlayerPageTheme.padding1))
         Text(text, color = textColor)
     }
 }
@@ -217,7 +205,7 @@ private fun PlayListInfo() {
     val imageSize = 110.dp
 
     Row(
-        Modifier.height(imageSize + PlayerTheme.padding2)
+        Modifier.height(imageSize + PlayerPageTheme.padding2)
     ) {
         // TODO: this image should be aligned to padding on left, was now moved because of adding shadow - fix
         Image(
@@ -225,21 +213,21 @@ private fun PlayListInfo() {
             modifier = Modifier
                 .shadow(
                     elevation = 16.dp,
-                    shape = RoundedCornerShape(PlayerTheme.padding2),
+                    shape = RoundedCornerShape(PlayerPageTheme.padding2),
                     clip = false
                 )
-                .padding(PlayerTheme.padding1)
+                .padding(PlayerPageTheme.padding1)
                 .size(imageSize)
-                .clip(RoundedCornerShape(PlayerTheme.padding2)),
+                .clip(RoundedCornerShape(PlayerPageTheme.padding2)),
             contentScale = ContentScale.FillBounds,
             contentDescription = "Birds"
         )
-        Spacer(Modifier.width(PlayerTheme.padding3))
-        Column(Modifier.padding(vertical = PlayerTheme.padding1)) {
+        Spacer(Modifier.width(PlayerPageTheme.padding3))
+        Column(Modifier.padding(vertical = PlayerPageTheme.padding1)) {
             Text(
                 "Album * 10 songs * 2022",
                 fontSize = 12.sp,
-                color = PlayerTheme.MiddleGray,
+                color = PlayerPageTheme.MiddleGray,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -255,7 +243,7 @@ private fun PlayListInfo() {
             Text(
                 "Chopin",
                 fontSize = 14.sp,
-                color = PlayerTheme.MiddleGray,
+                color = PlayerPageTheme.MiddleGray,
                 textDecoration = TextDecoration.Underline,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -282,24 +270,24 @@ fun CurrentlyPlayedInfo() {
             .fillMaxWidth()
             .height(62.dp)
             .background(
-                PlayerTheme.DarkGray,
+                PlayerPageTheme.DarkGray,
                 shape = RoundedCornerShape(
-                    topStart = PlayerTheme.cornersRadius,
-                    topEnd = PlayerTheme.cornersRadius
+                    topStart = PlayerPageTheme.cornersRadius,
+                    topEnd = PlayerPageTheme.cornersRadius
                 )
             )
-            .padding(PlayerTheme.padding1),
+            .padding(PlayerPageTheme.padding1),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             painter = painterResource(id = R.drawable.birds2),
             modifier = Modifier
-                .padding(PlayerTheme.padding1)
+                .padding(PlayerPageTheme.padding1)
                 .size(50.dp),
             contentScale = ContentScale.FillBounds,
             contentDescription = "Birds"
         )
-        Spacer(Modifier.width(PlayerTheme.padding3))
+        Spacer(Modifier.width(PlayerPageTheme.padding3))
         Column {
             Text(
                 "Nocturne 333",
@@ -311,7 +299,7 @@ fun CurrentlyPlayedInfo() {
                 "Chopin",
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                color = PlayerTheme.LightGray
+                color = PlayerPageTheme.LightGray
             )
         }
         Spacer(Modifier.weight(1f))
@@ -321,31 +309,31 @@ fun CurrentlyPlayedInfo() {
             tint = Color.White,
             modifier = Modifier.size(30.dp).clickable { }
         )
-        Spacer(Modifier.width(PlayerTheme.padding2))
+        Spacer(Modifier.width(PlayerPageTheme.padding2))
         Icon(
             Icons.Outlined.Close,
             contentDescription = "Pause",
-            tint = PlayerTheme.DarkGray,
+            tint = PlayerPageTheme.DarkGray,
             modifier = Modifier.size(30.dp).background(
                 color = Color.White,
                 shape = RoundedCornerShape(8.dp)
             ).clickable { }
         )
-        Spacer(Modifier.width(PlayerTheme.padding1))
+        Spacer(Modifier.width(PlayerPageTheme.padding1))
     }
 }
 
 @Composable
 private fun BottomNavigation() {
-    BottomAppBar(containerColor = PlayerTheme.DarkGray) {
+    BottomAppBar(containerColor = PlayerPageTheme.DarkGray) {
         Row(
             Modifier
                 .fillMaxWidth()
                 .background(
                     Color.White,
                     shape = RoundedCornerShape(
-                        topStart = PlayerTheme.cornersRadius,
-                        topEnd = PlayerTheme.cornersRadius
+                        topStart = PlayerPageTheme.cornersRadius,
+                        topEnd = PlayerPageTheme.cornersRadius
                     )
                 ),
             horizontalArrangement = Arrangement.SpaceEvenly
