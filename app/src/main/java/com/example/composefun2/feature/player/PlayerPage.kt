@@ -109,7 +109,9 @@ private fun PageBody() {
             PlayListInfo()
         }
         Spacer(Modifier.height(PlayerPageTheme.padding2))
-        ActionButtons(Modifier.padding(horizontal = PlayerPageTheme.padding3))
+        ActionButtons(
+            Modifier.padding(horizontal = PlayerPageTheme.padding3)
+        )
         Spacer(Modifier.height(PlayerPageTheme.padding2))
         SongsList(Modifier.weight(1f))
         CurrentlyPlayedInfo()
@@ -161,8 +163,8 @@ private fun MusicFileListItem(index: Int) {
 
 @Composable
 private fun ActionButtons(modifier: Modifier) {
-    val isPlaying = LocalPlayerPageState.current.isPlaying
     val viewModel: PlayerPageViewModel = hiltViewModel()
+    val isPlaying = LocalPlayerPageState.current.isPlaying
 
     Row(modifier) {
         ActionButton(
@@ -269,7 +271,6 @@ private fun PlayListInfo() {
 @Composable
 fun CurrentlyPlayedInfo() {
     Row(
-
         modifier = Modifier
             .fillMaxWidth()
             .height(62.dp)
