@@ -38,16 +38,17 @@ fun ModifiersPage() {
     }
 }
 
-fun Modifier.dottedBackground(r: Float, color: Color): Modifier {
-    require(r > 0)
-
-    return this.then(DottedBackground(r, color))
-}
+fun Modifier.dottedBackground(r: Float, color: Color): Modifier =
+    this.then(DottedBackground(r, color))
 
 private class DottedBackground(
     private val r: Float,
     private val color: Color
 ) : DrawModifier {
+    init {
+        require(r > 0)
+    }
+
     override fun ContentDrawScope.draw() {
         drawStar()
 
