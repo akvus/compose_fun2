@@ -38,7 +38,11 @@ fun ModifiersPage() {
     }
 }
 
-fun Modifier.dottedBackground(r: Float, color: Color) = this.then(DottedBackground(r, color))
+fun Modifier.dottedBackground(r: Float, color: Color): Modifier {
+    require(r > 0)
+
+    return this.then(DottedBackground(r, color))
+}
 
 private class DottedBackground(
     private val r: Float,
